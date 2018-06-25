@@ -3,6 +3,10 @@ package com.mikepenz.materialdrawer.app;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
+import android.widget.Toast;
 
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
@@ -10,6 +14,7 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 public class CustomContainerActivity extends AppCompatActivity {
 
@@ -32,6 +37,7 @@ public class CustomContainerActivity extends AppCompatActivity {
                 .withRootView(R.id.drawer_container)
                 .withToolbar(toolbar)
                 .withDisplayBelowStatusBar(false)
+               .withFooter(R.layout.footer_item)
                 .withActionBarDrawerToggleAnimated(true)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home),
@@ -45,6 +51,16 @@ public class CustomContainerActivity extends AppCompatActivity {
                 )
                 .withSavedInstance(savedInstanceState)
                 .build();
+        result.openDrawer();
+
+        result.setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                Toast.makeText(CustomContainerActivity.this,"position:"+position,Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
+
     }
 
     @Override
